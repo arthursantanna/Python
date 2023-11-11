@@ -268,7 +268,12 @@ def consultar_extrato(dados_cliente, saques_depositos):
         if senha == dados_cliente[6]:
             print(f"LIMITE DE CRÉDITO: R$ {dados_cliente[5]}")
 
-            print(saques_depositos)
+
+            for i in range(len(saques_depositos)):
+                if saques_depositos[i] < 0:
+                    print(f"SAQUE: {saques_depositos[i]}")
+                else:
+                    print(f"DEPOSITO: {saques_depositos[i]}")
 
             print(f"SALDO EM CONTA: R$ {dados_cliente[4]}")
 
