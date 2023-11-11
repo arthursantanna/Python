@@ -160,7 +160,6 @@ def deposito(dados_cliente, saques_depositos):
 
     return dados_cliente, saques_depositos
 
-
 def saque(dados_cliente, saques_depositos):
     
     limpar_tela()
@@ -236,7 +235,7 @@ def consulta_saldo(dados_cliente):
             tentativa_senha = 1
             print(f"SALDO EM CONTA: R$ {dados_cliente[4]}")
             print(f"LIMITE DE CRÉDITO: R$ {dados_cliente[5]}")
-            input("Pressione ENTER para prosseguir.")
+            mensagem = "Volte ao menu."
         else:
             mensagem = "SENHA INVÁLIDA!"
             tentativa_senha =+ 1
