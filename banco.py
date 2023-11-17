@@ -4,7 +4,7 @@ import msvcrt
 
 def menu():
     print("""MACK BANK – ESCOLHA UMA OPÇÃO
-          
+
     (1) CADASTRAR CONTA CORRENTE
     (2) DEPOSITAR
     (3) SACAR
@@ -37,7 +37,7 @@ def cadastro_cliente(dados_cliente):
 
             print("Mack Bank - Cadastro de Conta\n")
             print(f"Número da Conta: {dados_cliente[0]}")
-            
+
             # nome do cliente
             try: 
                 print(f"Nome do Cliente: {dados_cliente[1]}")
@@ -137,36 +137,31 @@ def deposito(dados_cliente, saques_depositos):
 
     print("MACK BANK – DEPÓSITO DA CONTA\n")
 
-    # verifico se o formato dos números são validos e se o funcionamento está certo.
-    try:
-        numero_conta = int(input("Informe o número da conta: "))
+    numero_conta = int(input("Informe o número da conta: "))
 
-        if (numero_conta == dados_cliente[0]) == False: raise ValueError("Conta não encontrada.")
-                    
-        print(f"Nome do Cliente: {dados_cliente[1]}")
-
-        valor_deposito = float(input("Digite o valor do depósito: "))
-
-        if valor_deposito <= 0:
-            raise ValueError("Digite um valor maior do que 0.")
+    if (numero_conta == dados_cliente[0]):
+        print(f"NOME DO CLIENTE: {dados_cliente[1]}")
+    
+        valor_deposito = float(input("VALOR DO DEPÓSITO: "))
         
-        dados_cliente[4] = dados_cliente[4] + valor_deposito
-        saques_depositos.append(valor_deposito)
+        if valor_deposito > 0:
+            dados_cliente[4] = dados_cliente[4] + valor_deposito
+            mensagem = "DEPÓSITO REALIZADO COM SUCESSO!"
+        else:
+            mensagem = "VALOR INVÁLIDO!"
+    else: 
+        mensagem = "NÚMERO DA CONTA INVÁLIDO!"
 
-        input("\nDepósito realizado com sucesso! Pressione alguma ENTER para prosseguir.")
-        
-    except ValueError as e:
-        input(f"{e} Pressione ENTER para tentar novamente...")
+    if mensagem != "DEPÓSITO REALIZADO COM SUCESSO!":
+        input(f"{mensagem} Pressione ENTER para tentar novamente...")
         deposito(dados_cliente, saques_depositos)
-
-    except Exception as e:
-        input(f"{e} Pressione ENTER para tentar novamente...")
-        deposito(dados_cliente, saques_depositos)
+    else:
+        input(f"{mensagem} Pressione ENTER para prosseguir.")
 
     return dados_cliente, saques_depositos
 
 def saque(dados_cliente, saques_depositos):
-    
+
     limpar_tela()
 
     if dados_cliente[8] == False:
@@ -179,7 +174,7 @@ def saque(dados_cliente, saques_depositos):
             print(f"NOME DO CLIENTE: {dados_cliente[1]}")
 
             senha = input("INFORME A SENHA: ")
-        
+
             if senha == dados_cliente[6]:
                 dados_cliente[7] = 1
                 valor_saque = float(input("VALOR DO SAQUE: R$ "))
@@ -195,13 +190,13 @@ def saque(dados_cliente, saques_depositos):
 
                     elif (dados_cliente[4] + dados_cliente[5]) >= valor_saque: 
                         saldo_saque = (dados_cliente[4] + dados_cliente[5]) - valor_saque
-                        dados_cliente[4] = 0
+                        dados_cliente[4] = dados_cliente[4] - valor_saque 
                         dados_cliente[5] = saldo_saque
                         print("VOCÊ ESTÁ USANDO O SEU LIMITE DE CRÉDITO.")
                         valor_saque = valor_saque * -1
                         saques_depositos.append(valor_saque)
                         mensagem = "SAQUE REALIZADO COM SUCESSO!"
-                    
+
                     else:
                         mensagem = "SALDO INSUFICIENTE."
                 else:
@@ -220,7 +215,7 @@ def saque(dados_cliente, saques_depositos):
             saque(dados_cliente, saques_depositos)
         else:
             input(f"{mensagem} Pressione ENTER para prosseguir.")
-    
+
     else:
         print("Conta bloqueada. Presione ENTER para voltar ao menu inicial.")
 
@@ -253,7 +248,7 @@ def consulta_saldo(dados_cliente):
                     dados_cliente[8] = True
         else:
             mensagem = "NÚMERO DA CONTA INVÁLIDO!"
-            
+
         if mensagem != "SENHA INVÁLIDA!" or mensagem != "NÚMERO DA CONTA INVÁLIDO!":
             input(f"{mensagem} Pressione ENTER para prosseguir.")
             print(dados_cliente[7])
@@ -308,7 +303,7 @@ def consultar_extrato(dados_cliente, saques_depositos):
 
     return dados_cliente, saques_depositos
 
-        
+
 fim = False
 cadastro_preenchido = False
 saques_depositos = []
@@ -322,7 +317,7 @@ while not fim:
     opcao = int(input("Sua opção: "))
 
     match opcao:
-        
+
         # cadastro
         case 1:
             if not cadastro_preenchido:
@@ -348,7 +343,7 @@ while not fim:
                     dados_cliente, saques_depositos = saque(dados_cliente, saques_depositos)
                 else:
                     input("Conta bloqueada. Presione ENTER para voltar ao menu inicial.")
-         
+
         # consulta saldo
         case 4:
             if not cadastro_preenchido:
@@ -380,7 +375,7 @@ while not fim:
 
 limpar_tela()
 print("""MACK BANK – SOBRE
-      
+
 Este programa foi desenvolvido por:
 
 Arthur Santana - 32391854
