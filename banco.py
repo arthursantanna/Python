@@ -146,6 +146,7 @@ def deposito(dados_cliente, saques_depositos):
         
         if valor_deposito > 0:
             dados_cliente[4] = dados_cliente[4] + valor_deposito
+            saques_depositos.append(valor_deposito)
             mensagem = "DEPÓSITO REALIZADO COM SUCESSO!"
         else:
             mensagem = "VALOR INVÁLIDO!"
